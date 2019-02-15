@@ -1,0 +1,182 @@
+<html>
+    <head>
+        <title>Speech Project</title>
+        <style>
+            body {background-color: powderblue;}
+            h1 {text-align: center;
+            font-size: 500%;
+            margin-bottom: 1px;}
+            h4{ text-align: center;
+            margin: 5px;}
+            .center {
+                display: block;
+                margin-left: auto;
+                margin-right: auto;
+                width: 50%;
+                border: 10px double gray;
+            }
+            .sentences {
+                margin: 10px auto;
+                padding-left: 4px;
+                display: flex;
+                justify-content: space-between;
+                width: 50%;
+                background-color: gray
+            }
+            .submitButton {  
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            .completedSentences{                
+                margin: 10px auto;
+                text-align: center;
+                width: 50%;
+                background-color: gray
+            }
+        </style>
+    </head>
+    <body>
+        <h1>SmashLibs</h1>
+        <img src="./villager.jpg" class="center">
+        
+        <div class = "sentences">
+        <div>
+          <h4>Sentence One</h4>
+          Noun:<br>
+          <input id="1_1" type="text" name="Blank One" value="Villager">
+          <br>
+          Noun:<br>
+          <input id="1_2" type="text" name="Blank Two" value="Link">
+          <br>
+          Noun:<br>
+          <input id= "1_3" type="text" name="Blank Three" value="pots">
+          <br>
+          Verb:<br>
+          <input id= "1_4" type="text" name="Blank Four" value="prank">
+          <br><br>
+         </div>
+            
+        <div>
+          <h4>Sentence Two</h4>
+          Verb:<br>
+          <input id="2_1" type="text" name="Blank One" value="drop">
+          <br>
+          Noun:<br>
+          <input id="2_2" type="text" name="Blank Two" value="plant">
+          <br>
+          Verb:<br>
+          <input id= "2_3" type="text" name="Blank Three" value="steal">
+          <br>
+          Noun:<br>
+          <input id= "2_4" type="text" name="Blank Four" value="equipment">
+          <br><br>
+        </div>
+            
+        <div>
+          <h4>Sentence Three</h4>
+          Noun:<br>
+          <input id="3_1" type="text" name="Blank Two" value="hero">
+          <br>
+          Noun:<br>
+          <input id= "3_2" type="text" name="Blank Three" value="time">
+          <br>
+          Adjective:<br>
+          <input id= "3_3" type="text" name="Blank Four" value="master">
+          <br>
+          Adjective:<br>
+          <input id= "3_4" type="text" name="Blank Four" value="hyrule">
+          <br><br>
+        </div>
+        </div>
+        
+        <div class='submitButton'>
+          <button id="test">Submit</button>
+        </div>
+        
+        <div class="completedSentences">
+            <p id="SentenceOne">_____ was tired of _____ breaking his _____, so he decided to _____ him.</p>
+
+            <p id="SentenceTwo">He would _____ a ______ on him and _____ all of his _____.</p>
+
+            <p id="SentenceThree">_____ will become the _____ of _____, wielding the _____ sword and _____ shield.</p>
+        </div>
+        
+        <div class="submitButton">
+            <select id="voices">
+                <option value="1">Voice 1</option>
+                <option value="2">Voice 2</option>
+            </select>
+            <button id="play">Speak</button>
+        </div>
+
+    <script>
+        var button = document.getElementById('test');
+        var button2 = document.getElementById('play');
+        var one_1 = document.getElementById('1_1');
+        var one_2 = document.getElementById('1_2');
+        var one_3 = document.getElementById('1_3');
+        var one_4 = document.getElementById('1_4');
+        var two_1 = document.getElementById('2_1');
+        var two_2 = document.getElementById('2_2');
+        var two_3 = document.getElementById('2_3');
+        var two_4 = document.getElementById('2_4');
+        var three_1 = document.getElementById('3_1');
+        var three_2 = document.getElementById('3_2');
+        var three_3 = document.getElementById('3_3');
+        var three_4 = document.getElementById('3_4');
+        
+        button.onclick = function () {
+        var strOne = one_1.value + ' was tired of ' 
+            + one_2.value + ' breaking his ' 
+            + one_3.value + ', so he decided to '
+            + one_4.value + ' him.';
+        var strTwo = 'He would ' + two_1.value + 
+                     ' a ' + two_2.value +
+                     ' on him and ' + two_3.value +
+                     ' all of his ' + two_4.value +
+                     '.';
+        var strThree = 'Thus, becoming the ' +
+                       three_1.value + ' of ' +
+                       three_2.value + ', wielding the ' +
+                       three_3.value + ' sword and ' +
+                       three_4.value + ' shield.';
+        document.getElementById('SentenceOne').innerHTML = strOne;
+        document.getElementById('SentenceTwo').innerHTML = strTwo;
+        document.getElementById('SentenceThree').innerHTML = strThree;
+        };
+        
+        button2.onclick = function () {
+        var str = document.getElementById('SentenceOne').innerHTML + document.getElementById('SentenceTwo').innerHTML + document.getElementById('SentenceThree').innerHTML;
+            
+        var e = document.getElementById('voices');
+        var strUser = e.options[e.selectedIndex].value;
+        
+        if (strUser == '1') {
+            speechSynthesis.getVoices().forEach(function(voice) {
+            console.log(voice.name, voice.default ? voice.default :'');
+            });
+            var msg = new SpeechSynthesisUtterance(str);
+            msg.voice = speechSynthesis.getVoices().filter(function(voice) { return voice.name == 'Whisper'; })[0];
+            speechSynthesis.speak(msg);
+        }
+            
+        if (strUser == '2') {
+        var msg = new SpeechSynthesisUtterance();
+        var voices = window.speechSynthesis.getVoices();
+        msg.voice = voices[10]; 
+        msg.voiceURI = 'native';
+        msg.volume = 1;
+        msg.rate = 1;
+        msg.pitch = 2;
+        msg.text = str;
+        msg.lang = 'en-US';
+
+        speechSynthesis.speak(msg);
+        }
+            
+        };
+
+    </script>
+    </body>
+</html>

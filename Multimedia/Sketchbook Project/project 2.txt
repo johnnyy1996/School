@@ -1,0 +1,83 @@
+Car[] cars = new Car[8];
+int squareX, squareY;
+
+void setup() {
+  size(300,300);
+  smooth();
+  newstart();
+}
+
+void draw() {
+  background(0);
+  rect (0,0, width*2 ,height*1/5); 
+  rect (0,300, width*2 ,height*1/5); 
+  for (int i = 1; i < cars.length; i ++ ) 
+  {cars[i].drive();
+   cars[i].display();}
+   ellipse(squareX,squareY,10,10);
+  triangle(0,0,0,30,30,15);
+  triangle(300,0,300,30,270,15);
+  color c = color(255, 255, 255);
+  fill(c);
+}
+
+void keyPressed() {if (key==ENTER)
+{squareSize=squareSize+10} 
+ 
+if(key==CODED && keyCode==UP)
+{squareY=squareY-10}
+ 
+else if(key==CODED && keyCode==DOWN)
+{squareY=squareY+10}
+ 
+else if(key==CODED && keyCode==LEFT)
+{squareX=squareX-10}
+ 
+else if(key==CODED && keyCode==RIGHT)
+{squareX=squareX+10}
+}
+
+class Car { 
+  color c;
+  float xpos;
+  float ypos;
+  float xspeed;
+  
+  Car(color tempC, float tempXpos, float tempYpos, float tempXspeed) { 
+    c = tempC;
+    xpos = tempXpos;
+    ypos = tempYpos;
+    xspeed = tempXspeed;
+  }
+
+  void display() {
+    stroke(0);
+    fill(c);
+    rectMode(CENTER);
+    rect(xpos,ypos,20,10);
+  }
+
+  void drive() {
+    xpos = xpos + xspeed;
+    if (xpos > width) {
+      xpos = 0;
+    }
+}
+}
+
+void newstart()
+{   for (int i = 1; i < cars.length; i ++) 
+  {cars[i] = new Car(color(i*50,25,255),0,i*37,i*1.5);}
+  
+    ellipseMode(CENTER); 
+squareX = width/2; squareY = height*19/20;}
+
+void message()
+{textSize(36);
+  fill(0);
+  text("You Win!", 75,150);
+  
+  textSize(24);
+  fill(0);
+  text("Keep going up to restart", 25,200);}
+
